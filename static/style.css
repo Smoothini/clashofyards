@@ -1,0 +1,22 @@
+/* Custom styles for Backyard Monsters Tracker */
+.monster-card {
+  transition: transform 0.2s ease-in-out;
+}
+
+.monster-card:hover {
+  transform: translateY(-2px);
+}
+
+.upgrade-button {
+  background: linear-gradient(45deg, #10b981, #059669);
+}
+
+.upgrade-button:hover {
+  background: linear-gradient(45deg, #059669, #047857);
+}
+
+.resource-icon {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+}

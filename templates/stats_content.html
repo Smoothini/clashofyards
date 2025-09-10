@@ -1,0 +1,128 @@
+<div class="space-y-6">
+    <h2 class="text-2xl font-bold text-gray-800 mb-6">Base Statistics</h2>
+    
+    <!-- Overview Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div class="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
+            <div class="text-center">
+                <div class="text-3xl font-bold text-blue-600">{{ stats.town_hall_level }}</div>
+                <div class="text-sm text-gray-600 mt-1">Town Hall Level</div>
+            </div>
+        </div>
+        
+        <div class="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
+            <div class="text-center">
+                <div class="text-3xl font-bold text-green-600">{{ stats.total_buildings }}</div>
+                <div class="text-sm text-gray-600 mt-1">Total Buildings</div>
+            </div>
+        </div>
+        
+        <div class="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
+            <div class="text-center">
+                <div class="text-3xl font-bold text-purple-600">{{ stats.unlocked_monsters }}</div>
+                <div class="text-sm text-gray-600 mt-1">Unlocked Monsters</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Progress Bars -->
+    <div class="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
+        <h3 class="text-lg font-semibold mb-4">Upgrade Progress</h3>
+        
+        <div class="space-y-4">
+            <div>
+                <div class="flex justify-between text-sm mb-1">
+                    <span>Buildings Progress</span>
+                    <span>{{ stats.building_progress }}%</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2">
+                    <div class="bg-blue-600 h-2 rounded-full" style="width: {{ stats.building_progress }}%"></div>
+                </div>
+            </div>
+            
+            <div>
+                <div class="flex justify-between text-sm mb-1">
+                    <span>Monsters Progress</span>
+                    <span>{{ stats.monster_progress }}%</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2">
+                    <div class="bg-green-600 h-2 rounded-full" style="width: {{ stats.monster_progress }}%"></div>
+                </div>
+            </div>
+            
+            <div>
+                <div class="flex justify-between text-sm mb-1">
+                    <span>Champions Progress</span>
+                    <span>{{ stats.champion_progress }}%</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2">
+                    <div class="bg-purple-600 h-2 rounded-full" style="width: {{ stats.champion_progress }}%"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Resource Requirements -->
+    <div class="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
+        <h3 class="text-lg font-semibold mb-4">Total Resource Requirements</h3>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="text-center p-4 bg-green-50 rounded-lg">
+                <div class="text-2xl font-bold text-green-600">{{ "{:,}".format(stats.total_twigs) }}</div>
+                <div class="text-sm text-gray-600">🌿 Twigs Needed</div>
+            </div>
+            
+            <div class="text-center p-4 bg-blue-50 rounded-lg">
+                <div class="text-2xl font-bold text-blue-600">{{ "{:,}".format(stats.total_pebbles) }}</div>
+                <div class="text-sm text-gray-600">🪨 Pebbles Needed</div>
+            </div>
+            
+            <div class="text-center p-4 bg-purple-50 rounded-lg">
+                <div class="text-2xl font-bold text-purple-600">{{ "{:,}".format(stats.total_goo) }}</div>
+                <div class="text-sm text-gray-600">🟢 Goo Needed</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Detailed Breakdown -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
+            <h3 class="text-lg font-semibold mb-4">Monster Status</h3>
+            <div class="space-y-3">
+                <div class="flex justify-between">
+                    <span class="text-gray-600">Unlocked Monsters:</span>
+                    <span class="font-semibold text-green-600">{{ stats.unlocked_monsters }}</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-gray-600">Locked Monsters:</span>
+                    <span class="font-semibold text-red-600">{{ stats.locked_monsters }}</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-gray-600">Total Monsters:</span>
+                    <span class="font-semibold">{{ stats.total_monsters + stats.locked_monsters }}</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
+            <h3 class="text-lg font-semibold mb-4">Champion Status</h3>
+            <div class="space-y-3">
+                <div class="flex justify-between">
+                    <span class="text-gray-600">Total Champions:</span>
+                    <span class="font-semibold">{{ stats.total_champions }}</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-gray-600">Average Level:</span>
+                    <span class="font-semibold text-purple-600">
+                        {% set avg_level = (champions|sum(attribute='current_level') / champions|length)|round(1) if champions else 0 %}
+                        {{ avg_level }}
+                    </span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-gray-600">Progress:</span>
+                    <span class="font-semibold">{{ stats.champion_progress }}%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

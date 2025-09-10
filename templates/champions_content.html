@@ -1,0 +1,84 @@
+<!-- Reduced spacing and improved formatting with emojis -->
+<div class="space-y-3">
+    <h2 class="text-xl font-bold text-gray-800 mb-3">Champions</h2>
+    
+    {% for champion in champions %}
+    <div class="bg-white border border-gray-200 rounded-lg p-3 shadow-sm">
+        <div class="grid grid-cols-3 gap-4">
+            <!-- Column 1: Name, Picture, Total Cost -->
+            <div class="text-center">
+                <h3 class="font-bold text-base mb-2">{{ champion.name }}</h3>
+                <div class="w-12 h-12 bg-gradient-to-br from-purple-400 to-purple-600 rounded-lg mx-auto mb-2 flex items-center justify-center">
+                    <span class="text-lg">👑</span>
+                </div>
+                <div class="text-xs text-gray-600">
+                    <div class="font-semibold mb-1">Total to Max:</div>
+                    <div class="text-purple-600">💎 {{ (champion.max_level - champion.current_level) * champion.feeding_cost }}</div>
+                    <div class="text-xs text-gray-500 mt-1">
+                        {{ champion.max_level - champion.current_level }} feedings needed
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Column 2: Current Level, Feed Button -->
+            <div class="text-center">
+                <div class="mb-3">
+                    <span class="text-xl font-bold text-purple-600">{{ champion.current_level }}</span>
+                    <span class="text-gray-500">/</span>
+                    <span class="text-base text-gray-700">{{ champion.max_level }}</span>
+                </div>
+                
+                {% if champion.current_level < champion.max_level %}
+                <button 
+                    hx-post="/api/feed/{{ champion.id }}"
+                    hx-target="#upgrade-result"
+                    class="bg-purple-500 hover:bg-purple-600 text-white px-3 py-2 rounded-lg font-medium transition-colors text-sm">
+                    Feed Champion
+                </button>
+                <div class="text-xs text-gray-500 mt-1">🕰 {{ champion.feeding_time }}</div>
+                <div class="text-xs text-purple-600 mt-1">💎 {{ champion.feeding_cost }}</div>
+                {% else %}
+                <div class="text-purple-600 font-semibold">MAX LEVEL</div>
+                <div class="text-xs text-gray-500 mt-1">Champion fully fed!</div>
+                {% endif %}
+            </div>
+            
+            <!-- Column 3: Feeding Cycle List -->
+            <div class="text-xs">
+                <div class="font-semibold mb-2">Feeding Cycle:</div>
+                {% if champion.current_level < champion.max_level %}
+                    {% for level in range(champion.current_level + 1, min(champion.current_level + 6, champion.max_level + 1)) %}
+                    <div class="flex justify-between items-center py-0.5">
+                        <span>Level {{ level }}:</span>
+                        <span>💎{{ champion.feeding_cost }} 🕰{{ champion.feeding_time }}</span>
+                    </div>
+                    {% endfor %}
+                    
+                    {% if champion.max_level - champion.current_level > 5 %}
+                    <div class="text-gray-500 italic mt-1">
+                        ... +{{ champion.max_level - champion.current_level - 5 }} more levels
+                    </div>
+                    {% endif %}
+                    
+                    <div class="mt-2 pt-2 border-t border-gray-300 font-semibold">
+                        <div class="flex justify-between">
+                            <span>Total:</span>
+                            <span class="text-purple-600">💎 {{ (champion.max_level - champion.current_level) * champion.feeding_cost }}</span>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="text-purple-600 italic">Champion is at maximum level!</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    
+    {% if not champions %}
+    <div class="text-center py-6 text-gray-500">
+        <p>No champions available.</p>
+    </div>
+    {% endif %}
+</div>
+
+<div id="upgrade-result"></div>

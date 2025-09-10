@@ -1,0 +1,86 @@
+<!-- Simplified Jinja2 syntax to fix template errors -->
+<div class="space-y-3">
+    <h2 class="text-xl font-bold text-gray-800 mb-3 capitalize">{{ category }} Buildings</h2>
+    
+    {% for building_name, building_instances in grouped_buildings.items() %}
+    <div class="bg-white border border-gray-200 rounded-lg p-3 shadow-sm">
+        <div class="grid grid-cols-3 gap-4">
+            <!-- Column 1: Name, Picture, Total Cost for ALL instances -->
+            <div class="text-center">
+                <h3 class="font-bold text-base mb-2">{{ building_name }}</h3>
+                <div class="w-12 h-12 bg-gray-200 rounded-lg mx-auto mb-2 flex items-center justify-center">
+                    <span class="text-lg">🏗️</span>
+                </div>
+                <div class="text-xs text-gray-600">
+                    <div class="font-semibold mb-1">Total to Max All:</div>
+                    {% set total_upgrades_needed = 0 %}
+                    {% for building in building_instances %}
+                        {% set total_upgrades_needed = total_upgrades_needed + (building.max_level - building.current_level) %}
+                    {% endfor %}
+                    <div class="text-green-600">🪓 {{ total_upgrades_needed * building_instances[0].upgrade_cost_twigs }}</div>
+                    <div class="text-blue-600">🥌 {{ total_upgrades_needed * building_instances[0].upgrade_cost_pebbles }}</div>
+                </div>
+            </div>
+            
+            <!-- Column 2: Individual building instances with levels and upgrade buttons -->
+            <div class="space-y-2">
+                {% for building in building_instances %}
+                <div class="flex items-center justify-between bg-gray-50 p-2 rounded">
+                    <div class="text-sm">
+                        <span class="font-medium text-blue-600">{{ building.current_level }}</span>
+                        <span class="text-gray-500">/</span>
+                        <span class="text-gray-700">{{ building.max_level }}</span>
+                    </div>
+                    
+                    {% if building.current_level < building.max_level %}
+                    <button 
+                        hx-post="/api/upgrade/building/{{ building.id }}"
+                        hx-target="#upgrade-result"
+                        class="bg-green-500 hover:bg-green-600 text-white px-2 py-1 rounded text-xs font-medium transition-colors">
+                        Upgrade
+                    </button>
+                    {% else %}
+                    <div class="text-green-600 font-semibold text-xs">MAX</div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+            
+            <!-- Column 3: Upgrade Costs List for each building -->
+            <div class="text-xs">
+                <div class="font-semibold mb-2">Remaining Upgrades:</div>
+                {% for building in building_instances %}
+                    {% if building.current_level < building.max_level %}
+                        <div class="mb-2 pb-2 border-b border-gray-100">
+                            <div class="font-medium text-gray-700 mb-1">{{ building_name }} #{{ loop.index }}:</div>
+                            {% set levels_to_show = [building.current_level + 1, building.current_level + 2, building.current_level + 3] %}
+                            {% for level in levels_to_show %}
+                                {% if level <= building.max_level %}
+                                <div class="flex justify-between py-0.5">
+                                    <span>Level {{ level }}:</span>
+                                    <span>🪓{{ building.upgrade_cost_twigs }} 🥌{{ building.upgrade_cost_pebbles }} 🕰{{ building.upgrade_time }}</span>
+                                </div>
+                                {% endif %}
+                            {% endfor %}
+                            {% if building.max_level - building.current_level > 3 %}
+                            <div class="text-gray-500 italic">... +{{ building.max_level - building.current_level - 3 }} more</div>
+                            {% endif %}
+                            <div class="font-semibold text-gray-800 mt-1 pt-1 border-t">
+                                Total: 🪓{{ (building.max_level - building.current_level) * building.upgrade_cost_twigs }} 🥌{{ (building.max_level - building.current_level) * building.upgrade_cost_pebbles }}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    
+    {% if not grouped_buildings %}
+    <div class="text-center py-6 text-gray-500">
+        <p>No {{ category }} buildings found.</p>
+    </div>
+    {% endif %}
+</div>
+
+<div id="upgrade-result"></div>

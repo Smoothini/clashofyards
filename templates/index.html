@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Backyard Monsters - Upgrade Tracker</title>
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .tab-button.active { 
+            background-color: #3B82F6; 
+            color: white; 
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <!-- Header -->
+    <header class="bg-green-800 text-white shadow-lg">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-6">
+                    <h1 class="text-xl font-bold">🏰 Backyard Monsters Tracker</h1>
+                    <nav class="hidden md:flex space-x-4">
+                        <a href="#" class="hover:text-green-200 text-sm">Home</a>
+                        <a href="#" class="hover:text-green-200 text-sm">Guides</a>
+                        <a href="#" class="hover:text-green-200 text-sm">Community</a>
+                    </nav>
+                </div>
+                <div class="text-sm">
+                    <span class="bg-green-700 px-3 py-1 rounded">Login with Discord</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mx-auto px-4 py-4">
+        <!-- User Profile Section -->
+        <!-- Reduced padding and spacing for more compact design -->
+        <div class="bg-white rounded-lg shadow-md p-4 mb-4">
+            <div class="text-center">
+                <h2 class="text-2xl font-bold text-gray-800 mb-2">{{ user.username }}</h2>
+                <div class="bg-yellow-100 border border-yellow-400 rounded-lg p-3 inline-block">
+                    <div class="flex items-center justify-center space-x-4">
+                        <div>
+                            <span class="text-base font-semibold">Town Hall Level {{ user.town_hall_level }}</span>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-sm text-gray-600">
+                                🪓 {{ user.th_upgrade_cost_twigs }} | 🥌 {{ user.th_upgrade_cost_pebbles }}
+                            </div>
+                            <div class="text-xs text-gray-500">🕰 {{ user.th_upgrade_time }}</div>
+                            <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded mt-1 text-sm">
+                                Upgrade TH
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Navigation -->
+        <div class="bg-white rounded-lg shadow-md mb-4">
+            <div class="border-b border-gray-200">
+                <nav class="flex space-x-1 p-3">
+                    <button onclick="showTab('resources')" class="tab-button active px-3 py-2 rounded-lg font-medium text-sm">Resources</button>
+                    <button onclick="showTab('buildings')" class="tab-button px-3 py-2 rounded-lg font-medium text-sm">Buildings</button>
+                    <button onclick="showTab('defensive')" class="tab-button px-3 py-2 rounded-lg font-medium text-sm">Defensive</button>
+                    <button onclick="showTab('locker')" class="tab-button px-3 py-2 rounded-lg font-medium text-sm">Monster Locker</button>
+                    <button onclick="showTab('academy')" class="tab-button px-3 py-2 rounded-lg font-medium text-sm">Academy</button>
+                    <button onclick="showTab('lab')" class="tab-button px-3 py-2 rounded-lg font-medium text-sm">Monster Lab</button>
+                    <button onclick="showTab('champs')" class="tab-button px-3 py-2 rounded-lg font-medium text-sm">Champions</button>
+                    <button onclick="showTab('stats')" class="tab-button px-3 py-2 rounded-lg font-medium text-sm">Stats</button>
+                </nav>
+            </div>
+
+            <div class="flex">
+                <!-- Main Content Area (3/4 width) -->
+                <div class="w-3/4 p-6">
+                    <!-- Resources Tab -->
+                    <div id="resources" class="tab-content active">
+                        <div hx-get="/api/buildings/resources" hx-trigger="load" hx-target="#resources-content">
+                            <div id="resources-content">Loading resources...</div>
+                        </div>
+                    </div>
+
+                    <!-- Buildings Tab -->
+                    <div id="buildings" class="tab-content">
+                        <div hx-get="/api/buildings/buildings" hx-trigger="load once" hx-target="#buildings-content">
+                            <div id="buildings-content">Loading buildings...</div>
+                        </div>
+                    </div>
+
+                    <!-- Defensive Tab -->
+                    <div id="defensive" class="tab-content">
+                        <div hx-get="/api/buildings/defensive" hx-trigger="load once" hx-target="#defensive-content">
+                            <div id="defensive-content">Loading defensive buildings...</div>
+                        </div>
+                    </div>
+
+                    <!-- Monster Locker Tab -->
+                    <div id="locker" class="tab-content">
+                        <div hx-get="/api/monsters/locker" hx-trigger="load once" hx-target="#locker-content">
+                            <div id="locker-content">Loading monster locker...</div>
+                        </div>
+                    </div>
+
+                    <!-- Academy Tab -->
+                    <div id="academy" class="tab-content">
+                        <div hx-get="/api/monsters/academy" hx-trigger="load once" hx-target="#academy-content">
+                            <div id="academy-content">Loading academy...</div>
+                        </div>
+                    </div>
+
+                    <!-- Monster Lab Tab -->
+                    <div id="lab" class="tab-content">
+                        <div hx-get="/api/monsters/lab" hx-trigger="load once" hx-target="#lab-content">
+                            <div id="lab-content">Loading monster lab...</div>
+                        </div>
+                    </div>
+
+                    <!-- Champions Tab -->
+                    <!-- Fixed champions tab loading by changing trigger to "load once" -->
+                    <div id="champs" class="tab-content">
+                        <div hx-get="/api/champions" hx-trigger="load once" hx-target="#champs-content">
+                            <div id="champs-content">Loading champions...</div>
+                        </div>
+                    </div>
+
+                    <!-- Stats Tab -->
+                    <div id="stats" class="tab-content">
+                        <div hx-get="/api/stats" hx-trigger="load" hx-target="#stats-content">
+                            <div id="stats-content">Loading stats...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar (1/4 width) -->
+                <!-- Reduced padding and made more compact -->
+                <div class="w-1/4 bg-gray-50 p-3 border-l border-gray-200">
+                    <div class="bg-white rounded-lg p-3 shadow-sm">
+                        <h3 class="font-bold text-base mb-2">Total Costs</h3>
+                        <div id="cost-summary">
+                            <div class="text-sm text-gray-600 mb-1">🪓 Twigs: 45,000</div>
+                            <div class="text-sm text-gray-600 mb-1">🥌 Pebbles: 23,000</div>
+                            <div class="text-sm text-gray-600 mb-1">🟢 Goo: 16,000</div>
+                            <hr class="my-2">
+                            <div class="text-sm font-semibold">Total Time: 12h 30m</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-6 mt-8">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center">
+                <div>
+                    <p class="text-sm">&copy; 2024 Backyard Monsters Tracker</p>
+                </div>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-400 hover:text-white text-sm">Privacy</a>
+                    <a href="#" class="text-gray-400 hover:text-white text-sm">Terms</a>
+                    <a href="#" class="text-gray-400 hover:text-white text-sm">Support</a>
+                    <a href="#" class="text-gray-400 hover:text-white text-sm">GitHub</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function showTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active class from all buttons
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+            
+            const tabContent = document.getElementById(tabName);
+            const htmxElement = tabContent.querySelector('[hx-get]');
+            if (htmxElement && !htmxElement.classList.contains('htmx-loaded')) {
+                htmx.trigger(htmxElement, 'load');
+                htmxElement.classList.add('htmx-loaded');
+            }
+        }
+    </script>
+</body>
+</html>
