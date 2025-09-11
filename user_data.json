@@ -1,0 +1,131 @@
+{
+  "profile": {
+    "username": "MonsterMaster123",
+    "town_hall_level": 8
+  },
+  "buildings": [
+    {
+      "id": "cannon_tower_1",
+      "name": "Cannon Tower",
+      "current_level": 5
+    },
+    {
+      "id": "hcc",
+      "name": "Hatchery Control Center",
+      "current_level": 0
+    },
+    {
+      "id": "cannon_tower_2",
+      "name": "Cannon Tower",
+      "current_level": 3
+    },
+    {
+      "id": "sniper_tower_1",
+      "name": "Sniper Tower",
+      "current_level": 3
+    },
+    {
+      "id": "sniper_tower_2",
+      "name": "Sniper Tower",
+      "current_level": 6
+    },
+    {
+      "id": "twig_harvester_1",
+      "name": "Twig Harvester",
+      "current_level": 6
+    },
+    {
+      "id": "twig_harvester_2",
+      "name": "Twig Harvester",
+      "current_level": 4
+    },
+    {
+      "id": "pebble_mine_1",
+      "name": "Pebble Mine",
+      "current_level": 4
+    },
+    {
+      "id": "housing_1",
+      "name": "Monster Housing",
+      "current_level": 7
+    },
+    {
+      "id": "housing_2",
+      "name": "Monster Housing",
+      "current_level": 5
+    }
+  ],
+  "monsters": [
+    {
+      "id": "pokey",
+      "name": "Pokey",
+      "unlocked": true,
+      "current_level": 3
+    },
+    {
+      "id": "bolt",
+      "name": "Bolt",
+      "unlocked": true,
+      "current_level": 0
+    },
+    {
+      "id": "brain",
+      "name": "Brain",
+      "unlocked": false,
+      "current_level": 0
+    },
+    {
+      "id": "fink",
+      "name": "Fink",
+      "unlocked": true,
+      "current_level": 2
+    },
+    {
+      "id": "eye_ra",
+      "name": "Eye-Ra",
+      "unlocked": true,
+      "current_level": 1
+    },
+    {
+      "id": "bandito",
+      "name": "Bandito",
+      "unlocked": false,
+      "current_level": 0
+    },
+    {
+      "id": "gorgo",
+      "name": "Gorgo",
+      "unlocked": true,
+      "current_level": 2
+    },
+    {
+      "id": "d_a_v_e",
+      "name": "D.A.V.E",
+      "unlocked": false,
+      "current_level": 0
+    },
+    {
+      "id": "zafreeti",
+      "name": "Zafreeti",
+      "unlocked": false,
+      "current_level": 0
+    }
+  ],
+  "champions": [
+    {
+      "id": "drull",
+      "name": "Drull",
+      "current_level": 6
+    },
+    {
+      "id": "gorgo",
+      "name": "Gorgo",
+      "current_level": 5
+    },
+    {
+      "id": "king_wormzer",
+      "name": "King Wormzer",
+      "current_level": 3
+    }
+  ]
+}

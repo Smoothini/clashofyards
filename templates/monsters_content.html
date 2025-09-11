@@ -23,24 +23,20 @@
                     {% endif %}
                 </h3>
                 <div class="w-16 h-16 bg-gray-200 rounded-lg mx-auto mb-3 flex items-center justify-center">
-                    {% if category == "locker" %}
-                        <span class="text-2xl">👾</span>
-                    {% elif category == "academy" %}
-                        <span class="text-2xl">🎓</span>
-                    {% elif category == "lab" %}
-                        <span class="text-2xl">🧪</span>
-                    {% endif %}
+                    <img src="{{ monster.image_url }}" alt="{{ monster.name }}" class="w-12 h-12 object-contain">
                 </div>
                 
                 {% if not monster.unlocked %}
                     <div class="text-sm text-gray-600">
                         <div class="font-semibold mb-1">Unlock Cost:</div>
-                        <div class="text-green-600">🟢 {{ monster.unlock_cost_goo }} Goo</div>
+                        <div class="text-green-600">🧪 {{ monster.next_upgrade.putty }} putty</div>
                     </div>
                 {% else %}
+                    <!-- Calculate total cost for all remaining upgrades -->
                     <div class="text-sm text-gray-600">
                         <div class="font-semibold mb-1">Total to Max:</div>
-                        <div class="text-green-600">🟢 {{ (monster.max_level - monster.current_level) * monster.upgrade_cost_goo }} Goo</div>
+                        <div class="text-green-600">🧪 {{ monster.instance_total_putty }} putty</div>
+                        <div class="text-purple-600">🕰 {{ monster.instance_total_time }}</div>
                     </div>
                 {% endif %}
             </div>
@@ -57,7 +53,7 @@
                         class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg font-medium transition-colors">
                         Unlock
                     </button>
-                    <div class="text-xs text-gray-500 mt-2">{{ monster.unlock_cost_goo }} Goo</div>
+                    <div class="text-xs text-gray-500 mt-2">{{ monster.next_upgrade.putty }} putty</div>
                 {% else %}
                     <div class="mb-4">
                         <span class="text-2xl font-bold text-green-600">{{ monster.current_level }}</span>
@@ -78,7 +74,8 @@
                             Enhance
                         {% endif %}
                     </button>
-                    <div class="text-xs text-gray-500 mt-2">{{ monster.upgrade_time }}</div>
+                    <!-- Time is now formatted by backend -->
+                    <div class="text-xs text-gray-500 mt-2">🕰 {{ monster.next_upgrade.time }}</div>
                     {% else %}
                     <div class="text-green-600 font-semibold">MAX LEVEL</div>
                     {% endif %}
@@ -93,30 +90,44 @@
                         <p class="mb-2">This monster is currently locked.</p>
                         <div class="bg-yellow-50 border border-yellow-200 rounded p-2">
                             <div class="font-medium">Unlock Cost:</div>
-                            <div class="text-green-600">🟢 {{ monster.unlock_cost_goo }} Goo</div>
+                            <div class="text-green-600">🧪 {{ monster.next_upgrade.putty }} putty</div>
                         </div>
                     </div>
                 {% else %}
                     <div class="font-semibold mb-2">Remaining Upgrades:</div>
                     {% if monster.current_level < monster.max_level %}
-                        {% for level in range(monster.current_level + 1, monster.max_level + 1) %}
-                        <div class="flex justify-between items-center py-1 border-b border-gray-100">
-                            <span>Level {{ level }}:</span>
-                            <div class="text-right">
-                                <div class="text-green-600">🟢 {{ monster.upgrade_cost_goo }} Goo</div>
-                            </div>
-                        </div>
+                        <!-- Fixed range calculation to avoid min() function and use proper data structure -->
+                        {% set max_display = monster.current_level + 3 %}
+                        {% if max_display > monster.max_level %}
+                            {% set max_display = monster.max_level %}
+                        {% endif %}
+                        
+                        {% for level in range(monster.current_level + 1, max_display + 1) %}
+                            {% if monster.remaining_upgrades and loop.index0 < monster.remaining_upgrades|length %}
+                                {% set upgrade = monster.remaining_upgrades[loop.index0] %}
+                                <div class="py-1 border-b border-gray-100">
+                                    <div class="flex justify-between items-center">
+                                        <span>Level {{ level }}:</span>
+                                        <span class="text-green-600">🧪{{ upgrade.putty }} 🕰{{ upgrade.time }}</span>
+                                    </div>
+                                </div>
+                            {% endif %}
                         {% endfor %}
                         
+                        {% if monster.max_level - monster.current_level > 3 %}
+                            <div class="text-xs text-gray-500 py-1">
+                                ... and {{ monster.max_level - monster.current_level - 3 }} more upgrades
+                            </div>
+                        {% endif %}
+                        
+                        <!-- Use backend-calculated totals instead of template calculations -->
                         <div class="mt-3 pt-2 border-t border-gray-300 font-semibold">
                             <div class="flex justify-between">
                                 <span>Total Cost:</span>
                                 <div class="text-right">
-                                    <div class="text-green-600">🟢 {{ (monster.max_level - monster.current_level) * monster.upgrade_cost_goo }} Goo</div>
+                                    <div class="text-green-600">🧪 {{ monster.instance_total_putty }} putty</div>
+                                    <div class="text-purple-600">🕰 {{ monster.instance_total_time }}</div>
                                 </div>
-                            </div>
-                            <div class="text-gray-600 text-xs mt-1">
-                                Total Time: {{ monster.upgrade_time }} × {{ monster.max_level - monster.current_level }}
                             </div>
                         </div>
                     {% else %}

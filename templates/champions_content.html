@@ -1,4 +1,4 @@
-<!-- Reduced spacing and improved formatting with emojis -->
+<!-- Updated champions template to use new feeding system with monsters and progressive requirements -->
 <div class="space-y-3">
     <h2 class="text-xl font-bold text-gray-800 mb-3">Champions</h2>
     
@@ -9,14 +9,18 @@
             <div class="text-center">
                 <h3 class="font-bold text-base mb-2">{{ champion.name }}</h3>
                 <div class="w-12 h-12 bg-gradient-to-br from-purple-400 to-purple-600 rounded-lg mx-auto mb-2 flex items-center justify-center">
-                    <span class="text-lg">👑</span>
+                    <img src="{{ champion.image_url }}" alt="{{ champion.name }}" class="w-10 h-10 rounded-lg object-cover">
                 </div>
                 <div class="text-xs text-gray-600">
                     <div class="font-semibold mb-1">Total to Max:</div>
-                    <div class="text-purple-600">💎 {{ (champion.max_level - champion.current_level) * champion.feeding_cost }}</div>
+                    {% if champion.current_level < champion.max_level %}
+                    <div class="text-purple-600">🧪 {{ champion.total_remaining_goo }} Goo</div>
                     <div class="text-xs text-gray-500 mt-1">
-                        {{ champion.max_level - champion.current_level }} feedings needed
+                        {{ champion.max_level - champion.current_level }} levels remaining
                     </div>
+                    {% else %}
+                    <div class="text-green-600">Max Level!</div>
+                    {% endif %}
                 </div>
             </div>
             
@@ -28,42 +32,49 @@
                     <span class="text-base text-gray-700">{{ champion.max_level }}</span>
                 </div>
                 
-                {% if champion.current_level < champion.max_level %}
+                {% if champion.current_level < champion.max_level and champion.next_level_requirement %}
                 <button 
                     hx-post="/api/feed/{{ champion.id }}"
                     hx-target="#upgrade-result"
                     class="bg-purple-500 hover:bg-purple-600 text-white px-3 py-2 rounded-lg font-medium transition-colors text-sm">
                     Feed Champion
                 </button>
-                <div class="text-xs text-gray-500 mt-1">🕰 {{ champion.feeding_time }}</div>
-                <div class="text-xs text-purple-600 mt-1">💎 {{ champion.feeding_cost }}</div>
+                <div class="text-xs text-gray-500 mt-1">🕰 {{ champion.feeding_cooldown }} cooldown</div>
+                <div class="text-xs text-purple-600 mt-1">🧪 {{ champion.next_feeding_goo_cost }} Goo</div>
+                <div class="text-xs text-orange-600 mt-1">{{ champion.next_level_requirement.feedings_needed }} feedings needed</div>
                 {% else %}
                 <div class="text-purple-600 font-semibold">MAX LEVEL</div>
                 <div class="text-xs text-gray-500 mt-1">Champion fully fed!</div>
                 {% endif %}
             </div>
             
-            <!-- Column 3: Feeding Cycle List -->
+            <!-- Column 3: Feeding Requirements List -->
             <div class="text-xs">
-                <div class="font-semibold mb-2">Feeding Cycle:</div>
+                <div class="font-semibold mb-2">Feeding Requirements:</div>
                 {% if champion.current_level < champion.max_level %}
-                    {% for level in range(champion.current_level + 1, min(champion.current_level + 6, champion.max_level + 1)) %}
-                    <div class="flex justify-between items-center py-0.5">
-                        <span>Level {{ level }}:</span>
-                        <span>💎{{ champion.feeding_cost }} 🕰{{ champion.feeding_time }}</span>
+                    <!-- Show next few levels -->
+                    {% for upgrade in champion.remaining_upgrades[:3] %}
+                    <div class="mb-2 p-2 bg-gray-50 rounded">
+                        <div class="font-semibold">Level {{ upgrade.level }}:</div>
+                        <div class="text-orange-600">{{ upgrade.feedings_needed }} feedings × {{ champion.feeding_cooldown }}</div>
+                        <div class="text-xs text-gray-600 mt-1">Per feeding:</div>
+                        {% for monster in upgrade.monsters_per_feeding %}
+                        <div class="text-xs">• {{ monster.count }}× {{ monster.name }} ({{ monster.goo_cost }} goo each)</div>
+                        {% endfor %}
+                        <div class="text-purple-600 font-semibold mt-1">Total: 🧪{{ upgrade.goo_cost }} Goo</div>
                     </div>
                     {% endfor %}
-                    
-                    {% if champion.max_level - champion.current_level > 5 %}
+
+                    {% if champion.remaining_upgrades|length > 3 %}
                     <div class="text-gray-500 italic mt-1">
-                        ... +{{ champion.max_level - champion.current_level - 5 }} more levels
+                        ... +{{ champion.remaining_upgrades|length - 3 }} more levels
                     </div>
                     {% endif %}
                     
                     <div class="mt-2 pt-2 border-t border-gray-300 font-semibold">
                         <div class="flex justify-between">
-                            <span>Total:</span>
-                            <span class="text-purple-600">💎 {{ (champion.max_level - champion.current_level) * champion.feeding_cost }}</span>
+                            <span>Grand Total:</span>
+                            <span class="text-purple-600">🧪{{ champion.total_remaining_goo }}</span>
                         </div>
                     </div>
                 {% else %}

@@ -1,0 +1,396 @@
+{
+  "buildings": {
+    "Cannon Tower": {
+      "category": "defensive",
+      "max_level": 8,
+      "image_url": "/static/images/cannon_tower.png",
+      "upgrade_costs": [
+        { "level": 1, "twigs": 5000, "pebbles": 2500, "time": "1h" },
+        { "level": 2, "twigs": 8000, "pebbles": 4000, "time": "1h 30m" },
+        { "level": 3, "twigs": 12000, "pebbles": 6000, "time": "2h" },
+        { "level": 4, "twigs": 15000, "pebbles": 8000, "time": "2h 30m" },
+        { "level": 5, "twigs": 20000, "pebbles": 10000, "time": "3h" },
+        { "level": 6, "twigs": 25000, "pebbles": 12500, "time": "4h" },
+        { "level": 7, "twigs": 30000, "pebbles": 15000, "time": "5h" },
+        { "level": 8, "twigs": 40000, "pebbles": 20000, "time": "6h" }
+      ]
+    },
+    "Hatchery Control Center": {
+      "category": "buildings",
+      "max_level": 8,
+      "image_url": "/static/images/hcc.png",
+      "upgrade_costs": [
+        { "level": 1, "twigs": 4000000, "pebbles": 4000000, "putty": 4000000,"time": "1d 1h" }
+      ]
+    },
+    "Sniper Tower": {
+      "category": "defensive",
+      "max_level": 8,
+      "image_url": "/static/images/sniper_tower.png",
+      "upgrade_costs": [
+        { "level": 1, "twigs": 4000, "pebbles": 2000, "time": "45m" },
+        { "level": 2, "twigs": 6000, "pebbles": 3000, "time": "1h 15m" },
+        { "level": 3, "twigs": 9000, "pebbles": 4500, "time": "1h 45m" },
+        { "level": 4, "twigs": 12000, "pebbles": 6000, "time": "2h 15m" },
+        { "level": 5, "twigs": 16000, "pebbles": 8000, "time": "3h" },
+        { "level": 6, "twigs": 20000, "pebbles": 10000, "time": "4h" },
+        { "level": 7, "twigs": 25000, "pebbles": 12500, "time": "5h" },
+        { "level": 8, "twigs": 32000, "pebbles": 16000, "time": "6h" }
+      ]
+    },
+    "Twig Harvester": {
+      "category": "resources",
+      "max_level": 8,
+      "image_url": "/static/images/twig_harvester.png",
+      "upgrade_costs": [
+        { "level": 1, "twigs": 3000, "pebbles": 1500, "time": "30m" },
+        { "level": 2, "twigs": 5000, "pebbles": 2500, "time": "45m" },
+        { "level": 3, "twigs": 7000, "pebbles": 3500, "time": "1h" },
+        { "level": 4, "twigs": 8000, "pebbles": 4000, "time": "1h 15m" },
+        { "level": 5, "twigs": 10000, "pebbles": 5000, "time": "1h 30m" },
+        { "level": 6, "twigs": 12000, "pebbles": 6000, "time": "2h" },
+        { "level": 7, "twigs": 15000, "pebbles": 7500, "time": "2h 30m" },
+        { "level": 8, "twigs": 18000, "pebbles": 9000, "time": "3h" }
+      ]
+    },
+    "Pebble Mine": {
+      "category": "resources",
+      "max_level": 8,
+      "image_url": "/static/images/pebble_mine.png",
+      "upgrade_costs": [
+        { "level": 1, "twigs": 4000, "pebbles": 2000, "time": "45m" },
+        { "level": 2, "twigs": 6000, "pebbles": 3000, "time": "1h" },
+        { "level": 3, "twigs": 8000, "pebbles": 4000, "time": "1h 30m" },
+        { "level": 4, "twigs": 10000, "pebbles": 5000, "time": "2h" },
+        { "level": 5, "twigs": 13000, "pebbles": 6500, "time": "2h 30m" },
+        { "level": 6, "twigs": 16000, "pebbles": 8000, "time": "3h" },
+        { "level": 7, "twigs": 20000, "pebbles": 10000, "time": "4h" },
+        { "level": 8, "twigs": 25000, "pebbles": 12500, "time": "5h" }
+      ]
+    },
+    "Monster Housing": {
+      "category": "buildings",
+      "max_level": 8,
+      "image_url": "/static/images/housing.png",
+      "upgrade_costs": [
+        { "level": 1, "twigs": 8000, "pebbles": 4000, "time": "1h 30m" },
+        { "level": 2, "twigs": 12000, "pebbles": 6000, "time": "2h" },
+        { "level": 3, "twigs": 16000, "pebbles": 8000, "time": "2h 30m" },
+        { "level": 4, "twigs": 20000, "pebbles": 10000, "time": "3h" },
+        { "level": 5, "twigs": 25000, "pebbles": 12500, "time": "4h" },
+        { "level": 6, "twigs": 30000, "pebbles": 15000, "time": "5h" },
+        { "level": 7, "twigs": 35000, "pebbles": 17500, "time": "6h" },
+        { "level": 8, "twigs": 45000, "pebbles": 22500, "time": "8h" }
+      ]
+    }
+  },
+  "monsters": {
+    "Pokey": {
+      "category": "locker",
+      "max_level": 5,
+      "unlock_cost_putty": 0,
+      "image_url": "/static/images/pokey.png",
+      "upgrade_costs": [
+        { "level": 1, "putty": 2000, "time": "15m" },
+        { "level": 2, "putty": 3000, "time": "20m" },
+        { "level": 3, "putty": 4000, "time": "25m" },
+        { "level": 4, "putty": 5000, "time": "30m" },
+        { "level": 5, "putty": 6000, "time": "35m" }
+      ]
+    },
+    "Bolt": {
+      "category": "locker",
+      "max_level": 5,
+      "unlock_cost_putty": 15000,
+      "image_url": "/static/images/bolt.png",
+      "upgrade_costs": [
+        { "level": 1, "putty": 4000, "time": "25m" },
+        { "level": 2, "putty": 6000, "time": "35m" },
+        { "level": 3, "putty": 8000, "time": "45m" },
+        { "level": 4, "putty": 10000, "time": "55m" },
+        { "level": 5, "putty": 12000, "time": "1h 5m" }
+      ]
+    },
+    "Brain": {
+      "category": "locker",
+      "max_level": 6,
+      "unlock_cost_putty": 25000,
+      "image_url": "/static/images/brain.png",
+      "upgrade_costs": [
+        { "level": 1, "putty": 6000, "time": "45m" },
+        { "level": 2, "putty": 8000, "time": "1h" },
+        { "level": 3, "putty": 10000, "time": "1h 15m" },
+        { "level": 4, "putty": 12000, "time": "1h 30m" },
+        { "level": 5, "putty": 15000, "time": "1h 45m" },
+        { "level": 6, "putty": 18000, "time": "2h" }
+      ]
+    },
+    "Fink": {
+      "category": "academy",
+      "max_level": 4,
+      "unlock_cost_putty": 0,
+      "image_url": "/static/images/fink.png",
+      "upgrade_costs": [
+        { "level": 1, "putty": 1500, "time": "10m" },
+        { "level": 2, "putty": 2500, "time": "15m" },
+        { "level": 3, "putty": 3000, "time": "20m" },
+        { "level": 4, "putty": 4000, "time": "25m" }
+      ]
+    },
+    "Eye-Ra": {
+      "category": "academy",
+      "max_level": 4,
+      "unlock_cost_putty": 5000,
+      "image_url": "/static/images/eye_ra.png",
+      "upgrade_costs": [
+        { "level": 1, "putty": 2000, "time": "15m" },
+        { "level": 2, "putty": 3000, "time": "20m" },
+        { "level": 3, "putty": 4000, "time": "25m" },
+        { "level": 4, "putty": 5000, "time": "30m" }
+      ]
+    },
+    "Bandito": {
+      "category": "academy",
+      "max_level": 5,
+      "unlock_cost_putty": 18000,
+      "image_url": "/static/images/bandito.png",
+      "upgrade_costs": [
+        { "level": 1, "putty": 3000, "time": "20m" },
+        { "level": 2, "putty": 4500, "time": "25m" },
+        { "level": 3, "putty": 6000, "time": "30m" },
+        { "level": 4, "putty": 7500, "time": "35m" },
+        { "level": 5, "putty": 9000, "time": "40m" }
+      ]
+    },
+    "Gorgo": {
+      "category": "lab",
+      "max_level": 6,
+      "unlock_cost_putty": 10000,
+      "image_url": "/static/images/gorgo.png",
+      "upgrade_costs": [
+        { "level": 1, "putty": 8000, "time": "1h" },
+        { "level": 2, "putty": 12000, "time": "1h 30m" },
+        { "level": 3, "putty": 15000, "time": "2h" },
+        { "level": 4, "putty": 18000, "time": "2h 30m" },
+        { "level": 5, "putty": 22000, "time": "3h" },
+        { "level": 6, "putty": 25000, "time": "3h 30m" }
+      ]
+    },
+    "D.A.V.E": {
+      "category": "lab",
+      "max_level": 8,
+      "unlock_cost_putty": 50000,
+      "image_url": "/static/images/dave.png",
+      "upgrade_costs": [
+        { "level": 1, "putty": 15000, "time": "2h" },
+        { "level": 2, "putty": 20000, "time": "2h 30m" },
+        { "level": 3, "putty": 25000, "time": "3h" },
+        { "level": 4, "putty": 30000, "time": "3h 30m" },
+        { "level": 5, "putty": 35000, "time": "4h" },
+        { "level": 6, "putty": 40000, "time": "4h 30m" },
+        { "level": 7, "putty": 45000, "time": "5h" },
+        { "level": 8, "putty": 50000, "time": "6h" }
+      ]
+    },
+    "Zafreeti": {
+      "category": "lab",
+      "max_level": 10,
+      "unlock_cost_putty": 75000,
+      "image_url": "/static/images/zafreeti.png",
+      "upgrade_costs": [
+        { "level": 1, "putty": 20000, "time": "3h" },
+        { "level": 2, "putty": 25000, "time": "3h 30m" },
+        { "level": 3, "putty": 30000, "time": "4h" },
+        { "level": 4, "putty": 35000, "time": "4h 30m" },
+        { "level": 5, "putty": 40000, "time": "5h" },
+        { "level": 6, "putty": 45000, "time": "5h 30m" },
+        { "level": 7, "putty": 50000, "time": "6h" },
+        { "level": 8, "putty": 55000, "time": "6h 30m" },
+        { "level": 9, "putty": 60000, "time": "7h" },
+        { "level": 10, "putty": 70000, "time": "8h" }
+      ]
+    }
+  },
+  "champions": {
+    "Drull": {
+      "max_level": 6,
+      "image_url": "/static/images/drull.png",
+      "feeding_cooldown": "8h",
+      "level_requirements": [
+        {
+          "level": 1,
+          "feedings_needed": 1,
+          "monsters_per_feeding": [
+            { "name": "Pokey", "count": 2, "goo_cost": 2000 },
+            { "name": "Fink", "count": 1, "goo_cost": 1500 }
+          ]
+        },
+        {
+          "level": 2,
+          "feedings_needed": 2,
+          "monsters_per_feeding": [
+            { "name": "Pokey", "count": 3, "goo_cost": 2000 },
+            { "name": "Eye-Ra", "count": 1, "goo_cost": 2000 }
+          ]
+        },
+        {
+          "level": 3,
+          "feedings_needed": 3,
+          "monsters_per_feeding": [
+            { "name": "Bolt", "count": 2, "goo_cost": 4000 },
+            { "name": "Bandito", "count": 1, "goo_cost": 3000 }
+          ]
+        },
+        {
+          "level": 4,
+          "feedings_needed": 4,
+          "monsters_per_feeding": [
+            { "name": "Brain", "count": 1, "goo_cost": 6000 },
+            { "name": "Gorgo", "count": 1, "goo_cost": 8000 }
+          ]
+        },
+        {
+          "level": 5,
+          "feedings_needed": 5,
+          "monsters_per_feeding": [
+            { "name": "D.A.V.E", "count": 1, "goo_cost": 15000 },
+            { "name": "Brain", "count": 2, "goo_cost": 6000 }
+          ]
+        },
+        {
+          "level": 6,
+          "feedings_needed": 6,
+          "monsters_per_feeding": [
+            { "name": "Zafreeti", "count": 1, "goo_cost": 20000 },
+            { "name": "D.A.V.E", "count": 1, "goo_cost": 15000 }
+          ]
+        }
+      ]
+    },
+    "Gorgo": {
+      "max_level": 6,
+      "image_url": "/static/images/gorgo.png",
+      "feeding_cooldown": "12h",
+      "level_requirements": [
+        {
+          "level": 1,
+          "feedings_needed": 1,
+          "monsters_per_feeding": [
+            { "name": "Gorgo", "count": 1, "goo_cost": 8000 },
+            { "name": "Pokey", "count": 3, "goo_cost": 2000 }
+          ]
+        },
+        {
+          "level": 2,
+          "feedings_needed": 2,
+          "monsters_per_feeding": [
+            { "name": "Gorgo", "count": 2, "goo_cost": 8000 },
+            { "name": "Brain", "count": 1, "goo_cost": 6000 }
+          ]
+        },
+        {
+          "level": 3,
+          "feedings_needed": 3,
+          "monsters_per_feeding": [
+            { "name": "D.A.V.E", "count": 1, "goo_cost": 15000 },
+            { "name": "Gorgo", "count": 1, "goo_cost": 8000 }
+          ]
+        },
+        {
+          "level": 4,
+          "feedings_needed": 4,
+          "monsters_per_feeding": [
+            { "name": "D.A.V.E", "count": 1, "goo_cost": 15000 },
+            { "name": "Zafreeti", "count": 1, "goo_cost": 20000 }
+          ]
+        },
+        {
+          "level": 5,
+          "feedings_needed": 5,
+          "monsters_per_feeding": [
+            { "name": "Zafreeti", "count": 2, "goo_cost": 20000 },
+            { "name": "Brain", "count": 1, "goo_cost": 6000 }
+          ]
+        },
+        {
+          "level": 6,
+          "feedings_needed": 6,
+          "monsters_per_feeding": [
+            { "name": "Zafreeti", "count": 2, "goo_cost": 20000 },
+            { "name": "D.A.V.E", "count": 2, "goo_cost": 15000 }
+          ]
+        }
+      ]
+    },
+    "King Wormzer": {
+      "max_level": 6,
+      "image_url": "/static/images/king_wormzer.png",
+      "feeding_cooldown": "6h",
+      "level_requirements": [
+        {
+          "level": 1,
+          "feedings_needed": 1,
+          "monsters_per_feeding": [
+            { "name": "Fink", "count": 4, "goo_cost": 1500 },
+            { "name": "Pokey", "count": 1, "goo_cost": 2000 }
+          ]
+        },
+        {
+          "level": 2,
+          "feedings_needed": 2,
+          "monsters_per_feeding": [
+            { "name": "Eye-Ra", "count": 2, "goo_cost": 2000 },
+            { "name": "Bolt", "count": 1, "goo_cost": 4000 }
+          ]
+        },
+        {
+          "level": 3,
+          "feedings_needed": 3,
+          "monsters_per_feeding": [
+            { "name": "Bandito", "count": 2, "goo_cost": 3000 },
+            { "name": "Brain", "count": 1, "goo_cost": 6000 }
+          ]
+        },
+        {
+          "level": 4,
+          "feedings_needed": 4,
+          "monsters_per_feeding": [
+            { "name": "Gorgo", "count": 2, "goo_cost": 8000 },
+            { "name": "Bolt", "count": 1, "goo_cost": 4000 }
+          ]
+        },
+        {
+          "level": 5,
+          "feedings_needed": 5,
+          "monsters_per_feeding": [
+            { "name": "D.A.V.E", "count": 1, "goo_cost": 15000 },
+            { "name": "Gorgo", "count": 1, "goo_cost": 8000 }
+          ]
+        },
+        {
+          "level": 6,
+          "feedings_needed": 6,
+          "monsters_per_feeding": [
+            { "name": "Zafreeti", "count": 1, "goo_cost": 20000 },
+            { "name": "D.A.V.E", "count": 1, "goo_cost": 15000 }
+          ]
+        }
+      ]
+    }
+  },
+  "town_hall": {
+    "max_level": 10,
+    "upgrade_costs": [
+      { "level": 1, "twigs": 10000, "pebbles": 5000, "time": "12h" },
+      { "level": 2, "twigs": 20000, "pebbles": 10000, "time": "1d" },
+      { "level": 3, "twigs": 30000, "pebbles": 15000, "time": "1d 12h" },
+      { "level": 4, "twigs": 40000, "pebbles": 20000, "time": "2d" },
+      { "level": 5, "twigs": 50000, "pebbles": 25000, "time": "2d 12h" },
+      { "level": 6, "twigs": 60000, "pebbles": 30000, "time": "3d" },
+      { "level": 7, "twigs": 70000, "pebbles": 35000, "time": "3d 12h" },
+      { "level": 8, "twigs": 80000, "pebbles": 40000, "time": "4d" },
+      { "level": 9, "twigs": 90000, "pebbles": 45000, "time": "4d 12h" },
+      { "level": 10, "twigs": 100000, "pebbles": 50000, "time": "5d" }
+    ]
+  }
+}

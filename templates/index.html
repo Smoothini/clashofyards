@@ -43,6 +43,10 @@
                 <h2 class="text-2xl font-bold text-gray-800 mb-2">{{ user.username }}</h2>
                 <div class="bg-yellow-100 border border-yellow-400 rounded-lg p-3 inline-block">
                     <div class="flex items-center justify-center space-x-4">
+                        <!-- Added town hall image that changes based on level -->
+                        <div class="flex-shrink-0">
+                            <img src="{{ user.town_hall_image }}" alt="Town Hall Level {{ user.town_hall_level }}" class="w-16 h-16 object-contain">
+                        </div>
                         <div>
                             <span class="text-base font-semibold">Town Hall Level {{ user.town_hall_level }}</span>
                         </div>
@@ -75,9 +79,9 @@
                 </nav>
             </div>
 
-            <div class="flex">
-                <!-- Main Content Area (3/4 width) -->
-                <div class="w-3/4 p-6">
+            <div class="flex" id="main-layout">
+                <!-- Main Content Area (3/4 width by default, full width for stats) -->
+                <div class="w-3/4 p-6" id="content-area">
                     <!-- Resources Tab -->
                     <div id="resources" class="tab-content active">
                         <div hx-get="/api/buildings/resources" hx-trigger="load" hx-target="#resources-content">
@@ -137,14 +141,14 @@
                 </div>
 
                 <!-- Sidebar (1/4 width) -->
-                <!-- Reduced padding and made more compact -->
-                <div class="w-1/4 bg-gray-50 p-3 border-l border-gray-200">
+                <!-- Made sidebar dynamic with HTMX updates -->
+                <div class="w-1/4 bg-gray-50 p-3 border-l border-gray-200" id="sidebar">
                     <div class="bg-white rounded-lg p-3 shadow-sm">
                         <h3 class="font-bold text-base mb-2">Total Costs</h3>
                         <div id="cost-summary">
                             <div class="text-sm text-gray-600 mb-1">🪓 Twigs: 45,000</div>
                             <div class="text-sm text-gray-600 mb-1">🥌 Pebbles: 23,000</div>
-                            <div class="text-sm text-gray-600 mb-1">🟢 Goo: 16,000</div>
+                            <div class="text-sm text-gray-600 mb-1">🟢 putty: 16,000</div>
                             <hr class="my-2">
                             <div class="text-sm font-semibold">Total Time: 12h 30m</div>
                         </div>
@@ -189,11 +193,31 @@
             // Add active class to clicked button
             event.target.classList.add('active');
             
+            const sidebar = document.getElementById('sidebar');
+            const contentArea = document.getElementById('content-area');
+            
+            if (tabName === 'stats') {
+                sidebar.style.display = 'none';
+                contentArea.classList.remove('w-3/4');
+                contentArea.classList.add('w-full');
+            } else {
+                sidebar.style.display = 'block';
+                contentArea.classList.remove('w-full');
+                contentArea.classList.add('w-3/4');
+            }
+            
             const tabContent = document.getElementById(tabName);
             const htmxElement = tabContent.querySelector('[hx-get]');
             if (htmxElement && !htmxElement.classList.contains('htmx-loaded')) {
                 htmx.trigger(htmxElement, 'load');
                 htmxElement.classList.add('htmx-loaded');
+            }
+            
+            if (['resources', 'buildings', 'defensive', 'locker', 'academy', 'lab', 'champs'].includes(tabName)) {
+                htmx.ajax('GET', `/api/sidebar-totals/${tabName}`, {
+                    target: '#cost-summary',
+                    swap: 'innerHTML'
+                });
             }
         }
     </script>
